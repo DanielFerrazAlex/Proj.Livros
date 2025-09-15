@@ -50,6 +50,22 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "ADO.Net.Client": {
+              "target": "Package",
+              "version": "[1.4.4, )"
+            },
+            "ADO.Net.Client.Annotations": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
+            "ADO.Net.Client.Core": {
+              "target": "Package",
+              "version": "[1.4.5, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
