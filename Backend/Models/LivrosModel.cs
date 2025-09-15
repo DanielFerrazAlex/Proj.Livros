@@ -2,7 +2,7 @@
 {
     public class LivrosModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string NomeLivro { get; set; }
         public string NomeAutor { get; set; }
         public string Genero { get; set; }

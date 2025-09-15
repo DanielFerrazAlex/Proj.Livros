@@ -13,18 +13,19 @@ namespace Backend.Services
         {
             _repository = repository;
         }
-        public async Task<ResponseModel<List<LivrosDTO>>> SelecionarLivrosPorAutor(string autor)
+
+        public async Task<ResponseModel<List<LivrosDTO>>> SelecionarLivrosPorGenero(string genero)
         {
             try
             {
-                List<LivrosModel>? resposta = await _repository.SelecionarLivrosPorAutor(autor);
+                List<LivrosModel> resposta = await _repository.SelecionarLivrosPorGenero(genero);
 
                 if (resposta.Count == 0)
                 {
                     return new ResponseModel<List<LivrosDTO>>
                     {
                         Success = false,
-                        Message = $"Este autor: {autor}. Não tem livros cadastrados ou não existe em nosso banco de dados",
+                        Message = $"Nenhum livro disponível para o gênero: '{genero}'.",
                         Data = null!
                     };
                 }
@@ -42,27 +43,27 @@ namespace Backend.Services
             }
             catch (Exception ex)
             {
-                return new ResponseModel<List<LivrosDTO>> 
-                { 
-                    Success = false, 
-                    Message = $"Erro ao buscar livros: {ex.Message}", 
-                    Data = null! 
+                return new ResponseModel<List<LivrosDTO>>
+                {
+                    Success = false,
+                    Message = $"Erro ao buscar livros: {ex.Message}",
+                    Data = null!
                 };
             }
         }
 
-        public async Task<ResponseModel<List<LivrosDTO>>> SelecionarLivrosPorGenero(string genero)
+        public async Task<ResponseModel<List<LivrosDTO>>> SelecionarLivrosPorAutor(string autor)
         {
             try
             {
-                List<LivrosModel> resposta = await _repository.SelecionarLivrosPorGenero(genero);
+                List<LivrosModel>? resposta = await _repository.SelecionarLivrosPorAutor(autor);
 
                 if (resposta.Count == 0)
                 {
                     return new ResponseModel<List<LivrosDTO>>
                     {
                         Success = false,
-                        Message = $"Nenhum livro disponível para o gênero: '{genero}'.",
+                        Message = $"Este autor: {autor}. Não tem livros cadastrados ou não existe em nosso banco de dados",
                         Data = null!
                     };
                 }
