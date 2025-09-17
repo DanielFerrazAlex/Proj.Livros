@@ -14,25 +14,25 @@ namespace Backend.Services
             _repository = repository;
         }
 
-        public async Task<ResponseModel<List<LivrosDTO>>> SelecionarLivrosPorGenero(string genero)
+        public async Task<ResponseModel<List<LivrosDTO>>> SelecionarLivros()
         {
             try
             {
-                List<LivrosModel> resposta = await _repository.SelecionarLivrosPorGenero(genero);
+                List<LivrosModel> resposta = await _repository.SelecionarLivros();
 
                 if (resposta.Count == 0)
                 {
                     return new ResponseModel<List<LivrosDTO>>
                     {
                         Success = false,
-                        Message = $"Nenhum livro disponível para o gênero: '{genero}'.",
+                        Message = $"Nenhum livro disponível'.",
                         Data = null!
                     };
                 }
 
                 List<LivrosDTO> mapper = resposta.Select(
-                    x => LivrosMapper.ToDTO(x)
-                 ).ToList();
+                        x => LivrosMapper.ToDTO(x)
+                     ).ToList();
 
                 return new ResponseModel<List<LivrosDTO>>
                 {
@@ -52,18 +52,18 @@ namespace Backend.Services
             }
         }
 
-        public async Task<ResponseModel<List<LivrosDTO>>> SelecionarLivrosPorAutor(string autor)
+        public async Task<ResponseModel<List<LivrosDTO>>> SelecionarLivrosPorTermo(string termo)
         {
             try
             {
-                List<LivrosModel>? resposta = await _repository.SelecionarLivrosPorAutor(autor);
+                List<LivrosModel> resposta = await _repository.SelecionarLivrosPorTermo(termo);
 
                 if (resposta.Count == 0)
                 {
                     return new ResponseModel<List<LivrosDTO>>
                     {
                         Success = false,
-                        Message = $"Este autor: {autor}. Não tem livros cadastrados ou não existe em nosso banco de dados",
+                        Message = $"Nenhum livro, autor ou gênero disponível com esse nome: {termo}'.",
                         Data = null!
                     };
                 }
@@ -122,25 +122,25 @@ namespace Backend.Services
             }
         }
 
-        public async Task<ResponseModel<object>> DeletarLivroPorNome(string nomeLivro)
+        public async Task<ResponseModel<object>> DeletarLivroPorNome(Guid id)
         {
             try
             {
-                int resposta = await _repository.DeletarLivroPorNomeLivro(nomeLivro);
+                int resposta = await _repository.DeletarLivro(id);
 
                 if (resposta == 0)
                 {
                     return new ResponseModel<object>
                     {
                         Success = false,
-                        Message = $"Nenhum livro encontrado com o nome '{nomeLivro}'.",
+                        Message = $"Nenhum livro encontrado'.",
                     };
                 }
 
                 return new ResponseModel<object>
                 {
                     Success = true,
-                    Message = $"Livro '{nomeLivro}' foi deletado com sucesso!",
+                    Message = $"Deletado com sucesso!",
                 };
             }
             catch (Exception ex)
@@ -149,6 +149,5 @@ namespace Backend.Services
                 throw;
             }
         }
-
     }
 }

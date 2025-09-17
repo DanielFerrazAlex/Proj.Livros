@@ -5,49 +5,17 @@
     "version": "1.0"
   },
   "paths": {
-    "/Livros/Genero": {
-      "get": {
-        "tags": [
-          "Livros"
-        ],
-        "parameters": [
-          {
-            "name": "genero",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/Livros/Autor": {
-      "get": {
-        "tags": [
-          "Livros"
-        ],
-        "parameters": [
-          {
-            "name": "autor",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/Livros": {
+      "get": {
+        "tags": [
+          "Livros"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "post": {
         "tags": [
           "Livros"
@@ -78,7 +46,29 @@
         }
       }
     },
-    "/Livros/{nomeLivro}": {
+    "/Livros/{termo}": {
+      "get": {
+        "tags": [
+          "Livros"
+        ],
+        "parameters": [
+          {
+            "name": "termo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Livros/{livro}": {
       "delete": {
         "tags": [
           "Livros"
@@ -86,6 +76,13 @@
         "parameters": [
           {
             "name": "nomeLivro",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "livro",
             "in": "path",
             "required": true,
             "schema": {

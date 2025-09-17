@@ -15,18 +15,17 @@ namespace Backend.Controllers
             _service = service;
         }
 
-
-        [HttpGet("Genero")]
-        public async Task<IActionResult> SelecionarLivrosPorGenero(string genero)
+        [HttpGet]
+        public async Task<IActionResult> SelecionarLivros()
         {
-            var resposta = await _service.SelecionarLivrosPorGenero(genero);
+            var resposta = await _service.SelecionarLivros();
             return resposta.Success ? Ok(resposta) : BadRequest(resposta);
         }
 
-        [HttpGet("Autor")]
-        public async Task<IActionResult> SelecionarLivrosPorAutor(string autor)
+        [HttpGet("{termo}")]
+        public async Task<IActionResult> SelecionarLivrosPorTermo(string termo)
         {
-            var resposta = await _service.SelecionarLivrosPorAutor(autor);
+            var resposta = await _service.SelecionarLivrosPorTermo(termo);
             return resposta.Success ? Ok(resposta) : BadRequest(resposta);
         }
 
@@ -37,10 +36,10 @@ namespace Backend.Controllers
             return resposta.Success ? Ok(resposta) : BadRequest(resposta);
         }
 
-        [HttpDelete("{nomeLivro}")]
-        public async Task<IActionResult> DeletarLivroPorNome(string nomeLivro)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletarLivro(Guid id)
         {
-            var resposta = await _service.DeletarLivroPorNome(nomeLivro);
+            var resposta = await _service.DeletarLivro(id);
             return resposta.Success ? Ok(resposta) : BadRequest(resposta);
         }
     }

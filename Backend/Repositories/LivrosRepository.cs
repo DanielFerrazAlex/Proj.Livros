@@ -13,39 +13,47 @@ namespace Backend.Repositories
             _connection = connection;
         }
 
-        public async Task<List<LivrosModel>> SelecionarLivrosPorGenero(string genero)
+        public async Task<List<LivrosModel>> SelecionarLivros()
         {
             List<LivrosModel> livros = new List<LivrosModel>();
-            string query = @"SELECT id, livro, autor, genero FROM livros WHERE genero = @genero";
+            string query = @"SELECT id, livro, autor, genero FROM livros";
 
             using (NpgsqlConnection conn = new NpgsqlConnection(_connection))
             {
                 await conn.OpenAsync();
                 using (NpgsqlCommand cmd = new NpgsqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@genero", genero);
                     await using NpgsqlDataReader reader = cmd.ExecuteReader();
 
-                    while (await reader.ReadAsync())
+                    while (reader.Read())
                     {
-                        livros.Add(new LivrosModel
+                        var livro = new LivrosModel
                         {
                             Id = reader.GetGuid(0),
                             NomeLivro = reader.GetString(1),
                             NomeAutor = reader.GetString(2),
                             Genero = reader.GetString(3),
-                        });
-                    }
+                        };
 
-                    return livros;
+                        livros.Add(livro);
+                    }
                 }
             }
+
+            return livros;
         }
 
-        public async Task<List<LivrosModel>> SelecionarLivrosPorAutor(string autor)
+        public async Task<List<LivrosModel>> SelecionarLivrosPorTermo(string termo)
         {
             List<LivrosModel> livros = new List<LivrosModel>();
-            string query = @"SELECT id, livro, autor, genero FROM Livros WHERE autor = @autor";
+            string query = 
+            @"
+                SELECT id, livro, autor, genero, active
+                FROM livros
+                WHERE livro ILIKE @termo
+                OR autor ILIKE @termo
+                OR genero ILIKE @termo
+            ";
 
             using (NpgsqlConnection conn = new NpgsqlConnection(_connection))
             {
@@ -53,7 +61,7 @@ namespace Backend.Repositories
 
                 using (NpgsqlCommand cmd = new NpgsqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("autor", autor);
+                    cmd.Parameters.AddWithValue("termo", $"%{termo}%");
                     await using NpgsqlDataReader reader = cmd.ExecuteReader();
 
                     while (await reader.ReadAsync())
@@ -90,9 +98,9 @@ namespace Backend.Repositories
                 }
             }
         }
-        public async Task<int> DeletarLivroPorNomeLivro(string nomeLivro)
+        public async Task<int> DeletarLivroPorNomeLivro(Guid id)
         {
-            string query = @"DELETE FROM livros WHERE livro = @livro";
+            string query = @"DELETE FROM livros WHERE id = @id";
 
             using (NpgsqlConnection conn = new NpgsqlConnection(_connection))
             {
@@ -100,7 +108,7 @@ namespace Backend.Repositories
 
                 using (NpgsqlCommand cmd = new NpgsqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("livro", nomeLivro);
+                    cmd.Parameters.AddWithValue("id", id);
                     return await cmd.ExecuteNonQueryAsync();
                 }
             }

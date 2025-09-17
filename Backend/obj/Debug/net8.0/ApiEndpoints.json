@@ -1,6 +1,16 @@
 [
   {
     "ContainingType": "Backend.Controllers.LivrosController",
+    "Method": "SelecionarLivros",
+    "RelativePath": "Livros",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.LivrosController",
     "Method": "CadastrarLivro",
     "RelativePath": "Livros",
     "HttpMethod": "POST",
@@ -18,7 +28,7 @@
   {
     "ContainingType": "Backend.Controllers.LivrosController",
     "Method": "DeletarLivroPorNome",
-    "RelativePath": "Livros/{nomeLivro}",
+    "RelativePath": "Livros/{livro}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -26,6 +36,11 @@
       {
         "Name": "nomeLivro",
         "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "livro",
+        "Type": "",
         "IsRequired": true
       }
     ],
@@ -33,32 +48,16 @@
   },
   {
     "ContainingType": "Backend.Controllers.LivrosController",
-    "Method": "SelecionarLivrosPorAutor",
-    "RelativePath": "Livros/Autor",
+    "Method": "SelecionarLivrosPorTermo",
+    "RelativePath": "Livros/{termo}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "autor",
+        "Name": "termo",
         "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend.Controllers.LivrosController",
-    "Method": "SelecionarLivrosPorGenero",
-    "RelativePath": "Livros/Genero",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "genero",
-        "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

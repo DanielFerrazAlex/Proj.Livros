@@ -1,0 +1,41 @@
+<div class="container mt-5">
+    <h2 class="d-flex justify-content-center align-items-center">Sistema de Bibliotecas</h2>
+    <button class="btn btn-success w-100">Cadastrar novo usuário</button>
+    <div>
+        <label class="form-label">Pesquisar:</label>
+        <input class="form-control mb-2" type="text" placeholder="Qual livro deseja buscar?" [(ngModel)]="termoBusca">
+
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-primary w-50" (click)="buscar(termoBusca)">Buscar</button>
+        </div>
+    </div>
+
+    <table class="table table-hover table-bordered mt-5">
+        <thead class="table-dark">
+            <tr>
+                <th>Nome do Livro:</th>
+                <th>Autor:</th>
+                <th>Gênero:</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+      <tr *ngFor="let livro of livros; let i = index">
+        <td>{{ livro.livro }}</td>
+        <td>{{ livro.autor }}</td>
+        <td>{{ livro.genero }}</td>
+        <td>
+          <button class="btn btn-info mx-2" (click)="emprestar(livro.active)">Emprestar Livro</button>
+          <button class="btn btn-warning mx-2" (click)="editar(livro.id)">Editar Livro</button>
+          <button class="btn btn-danger mx-2" (click)="excluir(livro.id)">Excluir Livro</button>
+        </td>
+      </tr>
+
+      <tr *ngIf="livros.length === 0">
+        <td colspan="4" class="text-center">Nenhum livro encontrado.</td>
+      </tr>
+    </tbody>
+    </table>
+</div>
