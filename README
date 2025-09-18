@@ -45,7 +45,7 @@ Passos para iniciar
 
 Abra a pasta do projeto Frontend (Proj.Livros/Frontend) no terminal.
 
-Instale as dependências:
+Instale as dependências caso precise:
 
 npm install
 
@@ -86,21 +86,7 @@ Passos para iniciar
 
 Abra a pasta do Worker (Proj.Livros/Worker) no Visual Studio.
 
-Certifique-se que o Program.cs da aplicação principal (API) registra o Worker como HostedService:
-
-builder.Services.AddHostedService<RelatorioWorker>();
-builder.Services.AddScoped<EmprestimoRepository>();
-
-
-Configure a licença do EPPlus antes de gerar Excel:
-
-ExcelPackage.License.SetNonCommercialPersonal("SeuNome");
-
-
-Rode a aplicação principal (API) — o Worker será iniciado automaticamente:
-
-dotnet run --project Proj.Livros/Backend
-
+Rode a aplicação (Worker)
 
 O Worker irá gerar relatórios a cada X segundos/minutos conforme configurado no Task.Delay.
 
@@ -121,4 +107,4 @@ Relatorio_Atrasados_20250917_153045.xlsx
 Banco de dados (PostgreSQL/Supabase) já está ativo
 Backend (API)
 Frontend (Angular)
-Worker será iniciado automaticamente junto com o Backend
+Worker (BackgroudService)
