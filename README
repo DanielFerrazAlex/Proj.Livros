@@ -1,0 +1,124 @@
+Documentação do Projeto Livros
+1. Backend (API)
+
+O backend é responsável por fornecer os endpoints para gerenciar livros, empréstimos e relatórios.
+
+Pré-requisitos
+
+.NET 8 SDK instalado
+
+Banco de dados PostgreSQL ou Supabase configurado
+
+Visual Studio 2022/2023 ou VS Code
+
+Passos para iniciar
+
+Abra a pasta do projeto Backend (Proj.Livros/Backend) no Visual Studio.
+
+Abra o arquivo appsettings.json e configure a connection string do banco de dados:
+
+{
+  "ConnectionStrings": {
+    "Connection": "Host=db.mvjwzqehzwvdqvzvfssb.supabase.co;Database=postgres;Username=postgres;Password=123456789;SSL Mode=Require;Trust Server Certificate=true"
+    }
+}
+
+
+Execute o backend:
+
+dotnet run
+
+
+O backend deve iniciar em http://localhost:7239 (ou a porta definida).
+
+2. Frontend (Angular)
+
+O frontend é responsável por interagir com o usuário, exibindo livros, empréstimos e relatórios.
+
+Pré-requisitos
+
+Node.js LTS
+
+Angular CLI (npm install -g @angular/cli)
+
+Passos para iniciar
+
+Abra a pasta do projeto Frontend (Proj.Livros/Frontend) no terminal.
+
+Instale as dependências:
+
+npm install
+
+
+Configure o arquivo environment.ts com a URL do backend:
+
+export const environment = {
+  production: false,
+  apiUrl: 'https://localhost:7239/Livros'
+};
+
+
+Inicie o servidor de desenvolvimento:
+
+ng serve
+
+
+Acesse a aplicação no navegador:
+
+http://localhost:4200
+
+
+Sempre que fizer alterações no frontend, ele será recarregado automaticamente.
+
+3. Worker (Relatório Automático)
+
+O Worker gera relatórios de livros atrasados automaticamente em Excel.
+
+Pré-requisitos
+
+.NET 8 SDK instalado
+
+Dependências NuGet restauradas
+
+Pasta de relatórios com permissão de escrita (opcional, será criada automaticamente se não existir)
+
+Passos para iniciar
+
+Abra a pasta do Worker (Proj.Livros/Worker) no Visual Studio.
+
+Certifique-se que o Program.cs da aplicação principal (API) registra o Worker como HostedService:
+
+builder.Services.AddHostedService<RelatorioWorker>();
+builder.Services.AddScoped<EmprestimoRepository>();
+
+
+Configure a licença do EPPlus antes de gerar Excel:
+
+ExcelPackage.License.SetNonCommercialPersonal("SeuNome");
+
+
+Rode a aplicação principal (API) — o Worker será iniciado automaticamente:
+
+dotnet run --project Proj.Livros/Backend
+
+
+O Worker irá gerar relatórios a cada X segundos/minutos conforme configurado no Task.Delay.
+
+Local onde os relatórios são salvos
+
+Por padrão, o arquivo Excel será salvo em:
+
+Proj.Livros/Worker/bin/Debug/net8.0/Relatorios/
+
+
+Se a pasta Relatorios não existir, ela será criada automaticamente.
+O nome do arquivo inclui data e hora para evitar sobrescritas:
+
+Relatorio_Atrasados_20250917_153045.xlsx
+
+4. Ordem de inicialização recomendada
+
+Banco de dados (PostgreSQL/Supabase) já está ativo
+Backend (API)
+Frontend (Angular)
+Worker será iniciado automaticamente junto com o Backend
