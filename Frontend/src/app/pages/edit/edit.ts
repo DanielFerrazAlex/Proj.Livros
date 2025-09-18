@@ -30,10 +30,10 @@ export class Edit implements OnInit {
   }
 
   editarLivro(livro: Livros) {
-  if (!livro.id) return;
+    if (!livro.id) return;
 
-  this.api.EditarLivro(livro.id, livro).subscribe({
-    next: () => this.router.navigate(['/']),
-  });
-}
+    this.api.EditarLivro(livro.id, livro).subscribe({
+      next: () => this.router.navigate(['/']),
+    });
+  }
 }

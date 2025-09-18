@@ -20,7 +20,7 @@ export class Form implements OnInit {
 
   ngOnInit(): void {
     this.Form = new FormGroup({
-      id : new FormControl(this.data ? this.data.id : ''),
+      id : new FormControl(this.data ? this.data.id : null),
       NomeLivro: new FormControl(this.data ? this.data.livro : ''),
       NomeAutor: new FormControl(this.data ? this.data.autor : ''),
       genero: new FormControl(this.data ? this.data.genero : '')
@@ -28,6 +28,7 @@ export class Form implements OnInit {
   }
 
   submit(){ 
-    this.onSubmit.emit(this.Form.value) 
+    const { id, ...resto } = this.Form.value;
+    this.onSubmit.emit(this.data ? { id, ...resto } : resto); 
   }
 }

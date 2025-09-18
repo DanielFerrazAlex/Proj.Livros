@@ -27,9 +27,8 @@
         <td>{{ livro.autor }}</td>
         <td>{{ livro.genero }}</td>
         <td>
-          <button class="btn btn-info mx-2" (click)="emprestar(livro.active)">Emprestar Livro</button>
-          <button class="btn btn-warning mx-2" (click)="editar(livro.id)" [routerLink]="['/Editar', livro.id]">Editar Livro</button>
-          <button class="btn btn-danger mx-2" (click)="excluir(livro.id)">Excluir Livro</button>
+          <button class="btn btn-warning mx-2" [routerLink]="['/Editar', livro.id]">Editar Livro</button>
+          <button class="btn btn-danger mx-2" (click)="excluir(livro.id!)">Excluir Livro</button>
         </td>
       </tr>
 
