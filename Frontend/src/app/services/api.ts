@@ -18,7 +18,23 @@ export class Api {
     return this.https.get<Response<Livros[]>>(`${this.ApiURL}`);
   }
 
-SelecionarLivrosPorTermo(termo: string): Observable<Response<Livros[]>> {
-  return this.https.get<Response<Livros[]>>(`${this.ApiURL}/${termo}`);
+  SelecionarLivrosPorTermo(termo: string): Observable<Response<Livros[]>> {
+    return this.https.get<Response<Livros[]>>(`${this.ApiURL}/${termo}`);
+  }
+
+    SelecionarLivrosPorId(id: string): Observable<Response<Livros>> {
+    return this.https.get<Response<Livros>>(`${this.ApiURL}/${id}`);
+  }
+
+  CadastrarLivro(livro: Livros): Observable<Response<Livros>> {
+    return this.https.post<Response<Livros>>(`${this.ApiURL}`, livro);
+  }
+
+EditarLivro(id : string ,livro: Livros): Observable<Response<Livros>> {
+  return this.https.put<Response<Livros>>(`${this.ApiURL}/${id}`, livro, { headers: { 'Content-Type': 'application/json' } });
 }
+
+  DeletarLivro(id: string): Observable<Response<Livros[]>> {
+    return this.https.delete<Response<Livros[]>>(`${this.ApiURL}/${id}`);
+  }
 }

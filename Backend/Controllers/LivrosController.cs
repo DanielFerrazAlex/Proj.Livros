@@ -29,10 +29,24 @@ namespace Backend.Controllers
             return resposta.Success ? Ok(resposta) : BadRequest(resposta);
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> SelecionarLivrosPorId(Guid id)
+        {
+            var resposta = await _service.SelecionarLivrosPorId(id);
+            return resposta.Success ? Ok(resposta) : BadRequest(resposta);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CadastrarLivro([FromBody] LivrosModel livro)
         {
             var resposta = await _service.CadastrarLivro(livro);
+            return resposta.Success ? Ok(resposta) : BadRequest(resposta);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditarLivro(Guid id, [FromBody] LivrosModel livro)
+        {
+            var resposta = await _service.EditarLivro(id, livro);
             return resposta.Success ? Ok(resposta) : BadRequest(resposta);
         }
 

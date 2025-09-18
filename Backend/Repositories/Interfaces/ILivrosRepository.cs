@@ -6,7 +6,9 @@ namespace Backend.Repositories.Interfaces
     {
         Task<List<LivrosModel>> SelecionarLivros();
         Task<List<LivrosModel>> SelecionarLivrosPorTermo(string termo);
+        Task<LivrosModel> SelecionarLivrosPorId(Guid id);
         Task<int> CadastrarLivro(LivrosModel livro);
+        Task<int> EditarLivro(Guid id, LivrosModel livro);
         Task<int> DeletarLivro(Guid id);
     }
 }
